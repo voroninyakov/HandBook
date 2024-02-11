@@ -60,10 +60,12 @@ def search_note(fields: list[str]):
     except FileNotFoundError:
         file = open('notes.txt', 'w+', encoding='utf-8')
         file.close()
+        return None
     searched = 0
     for line in lines:
-        for i in range(5):
-            if fields[i] and (fields[i] in line.split("|")[i] or fields[i] == line.split("|")[i]):
+        for i in range(0, 5):
+            print(fields[i], line.split("|")[i+1])
+            if fields[i] and (fields[i] in line.split("|")[i+1] or fields[i] == line.split("|")[i+1]):
                 print(line, end="")
                 searched += 1
                 break
@@ -89,7 +91,7 @@ def run():
                       line.split("|")[3],
                       line.split("|")[4],
                       line.split("|")[5],
-                      line.split("|")[6], id=line.split("|")[0]) for line in f.readlines()]
+                      line.split("|")[6], note_id=line.split("|")[0]) for line in f.readlines()]
     print("Справочник 1.0.0\nДля просмотра списка команд введите 'помощь'")
     while True:
         command = input(">>>")
@@ -108,8 +110,7 @@ def run():
                 with open('notes.txt', 'r', encoding='utf-8') as f:
                     for note in f.readlines():
                         print(note, end='')
-                        break
-                    else:
+                    if len(f.readlines()):
                         print('Записей нет')
             except FileNotFoundError:
                 print("Файл не найден, создаётся...")
