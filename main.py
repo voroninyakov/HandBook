@@ -64,7 +64,6 @@ def search_note(fields: list[str]):
     searched = 0
     for line in lines:
         for i in range(0, 5):
-            print(fields[i], line.split("|")[i+1])
             if fields[i] and (fields[i] in line.split("|")[i+1] or fields[i] == line.split("|")[i+1]):
                 print(line, end="")
                 searched += 1
